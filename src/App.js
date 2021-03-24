@@ -19,7 +19,7 @@ function App() {
 					<Login/>
 				) : (
 					<>
-						<Header />
+						<Header user={user}/>
 						<AppBody>
 							<SideBar />
 							<Switch>
