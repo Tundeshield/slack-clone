@@ -13,11 +13,7 @@ function Header() {
 		<HeaderContainer>
 			{/*Header Left*/}
 			<HeaderLeft>
-				<HeaderAvatar
-					onClick={() => auth.signOut()}
-					src={user?.photoURL}
-					alt={user?.displayName}
-				/>
+				<HeaderAvatar src={user?.photoURL} alt={user?.displayName} />
 				<AccessTimeIcon />
 			</HeaderLeft>
 			{/*Search*/}

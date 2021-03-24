@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
-import CreateIcon from "@material-ui/icons/Create";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SidebarOption from "./SidebarOption";
 import InboxIcon from "@material-ui/icons/Inbox";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
@@ -14,21 +14,25 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function SideBar() {
-	const [channels, loading, error] = useCollection(db.collection("rooms"));
+	const [channels, loading] = useCollection(db.collection("rooms"));
+	const [user] = useAuthState(auth);
+
+	console.log(user);
 	return (
 		<SideBarContainer>
 			<SideBarHeader>
 				<SideBarInfo>
-					<h2>Dove Technologies</h2>
+					<h2>{user.displayName}</h2>
 					<h3>
 						<FiberManualRecordIcon />
-						Tunde Adepegba
+						{user.email}
 					</h3>
 				</SideBarInfo>
-				<CreateIcon />
+				<ExitToAppIcon onClick={() => auth.signOut()} />
 			</SideBarHeader>
 			<SidebarOption Icon={InsertCommentIcon} title="Threads" />
 			<SidebarOption Icon={InboxIcon} title="Mentions & reactions" />
@@ -82,6 +86,11 @@ const SideBarHeader = styled.div`
 		font-size: 18px;
 		background-color: white;
 		border-radius: 999px;
+		cursor: pointer;
+		:hover {
+			background-color: #49274b;
+			color: white;
+		}
 	}
 `;
 const SideBarInfo = styled.div`
